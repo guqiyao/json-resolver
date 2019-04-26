@@ -9,7 +9,7 @@ import org.springframework.core.MethodParameter;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 /**
@@ -37,7 +37,8 @@ public class JacksonParameterParser implements ParameterParser {
         if (Objects.isNull(genericClass)) {
             return SimpleType.constructUnsafe(parameterClass);
         }
-        return OBJECT_MAPPER.getTypeFactory().constructParametricType(parameter.getParameterType(), genericClass);
+        return OBJECT_MAPPER.getTypeFactory()
+                .constructParametricType(parameter.getParameterType(), genericClass);
     }
 
     /**
@@ -58,7 +59,7 @@ public class JacksonParameterParser implements ParameterParser {
      * @return                  泛型类型
      */
     private Class<?> getGenericType(Class<?> parameterType, MethodParameter parameter) {
-        if (parameterType.isAssignableFrom(List.class)) {
+        if (parameterType.isAssignableFrom(Collection.class)) {
             ParameterizedType parameterizedType = ((ParameterizedType) parameter.getGenericParameterType());
             Type[] types = parameterizedType.getActualTypeArguments();
             return (Class<?>) types[0];

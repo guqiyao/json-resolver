@@ -46,7 +46,7 @@ public class JsonParameterResolver implements HandlerMethodArgumentResolver {
         }
 
         Object result = parameterParser.parse(body, fieldName, parameter);
-        
+
         if (jsonParameter.required() && Objects.isNull(result)) {
             throw new ParameterResolverException(String.format("JsonParameter的required参数值为true, 但是解析结果为null, field name : %s", fieldName));
         }

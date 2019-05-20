@@ -9,6 +9,10 @@ public class ParameterResolverException extends RuntimeException {
 
     private static final long serialVersionUID = 3722827156122672418L;
 
+    public ParameterResolverException(String message) {
+        super(message);
+    }
+
     public ParameterResolverException(String message, Throwable cause) {
         super(message, cause);
     }

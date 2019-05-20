@@ -11,6 +11,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Objects;
 
 /**
  * @Author: qiyao.gu
@@ -37,12 +38,20 @@ public class JsonParameterResolver implements HandlerMethodArgumentResolver {
             throws Exception {
 
         String body = getRequestBody(webRequest);
-        String value = parameter.getParameterAnnotation(JsonParameter.class).value();
-        if (StringUtils.isBlank(value)) {
-            value = parameter.getParameterName();
+        JsonParameter jsonParameter = parameter.getParameterAnnotation(JsonParameter.class);
+
+        String fieldName = jsonParameter.value();
+        if (StringUtils.isBlank(fieldName)) {
+            fieldName = parameter.getParameterName();
         }
 
-        return parameterParser.parse(body, value, parameter);
+        Object result = parameterParser.parse(body, fieldName, parameter);
+        
+        if (jsonParameter.required() && Objects.isNull(result)) {
+            throw new ParameterResolverException(String.format("JsonParameter的required参数值为true, 但是解析结果为null, field name : %s", fieldName));
+        }
+
+        return result;
     }
 
     private String getRequestBody(NativeWebRequest webRequest) {

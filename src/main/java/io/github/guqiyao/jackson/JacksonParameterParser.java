@@ -1,6 +1,7 @@
 package io.github.guqiyao.jackson;
 
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.SimpleType;
 import io.github.guqiyao.ParameterParser;
@@ -23,7 +24,13 @@ public class JacksonParameterParser implements ParameterParser {
 
     @Override
     public Object parse(String body, String key, MethodParameter methodParameter) throws IOException {
-        return OBJECT_MAPPER.readValue(parseValue(body, key), generateJavaType(methodParameter));
+        JsonNode value = parseValue(body, key);
+
+        if (Objects.isNull(value)) {
+            return null;
+        }
+
+        return OBJECT_MAPPER.readValue(value.toString(), generateJavaType(methodParameter));
     }
 
     /**
@@ -48,8 +55,8 @@ public class JacksonParameterParser implements ParameterParser {
      * @return                  需要解析的body
      * @throws IOException      io exception
      */
-    private String parseValue(String body, String key) throws IOException {
-        return OBJECT_MAPPER.readTree(body).get(key).toString();
+    private JsonNode parseValue(String body, String key) throws IOException {
+        return OBJECT_MAPPER.readTree(body).get(key);
     }
 
     /**

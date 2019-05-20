@@ -18,4 +18,10 @@ public @interface JsonParameter {
      * @return  参数名
      */
     String value() default "";
+
+    /**
+     * 是否必须
+     * @return  是否必须有这个参数
+     */
+    boolean required() default true;
 }

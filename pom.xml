@@ -6,7 +6,7 @@
 
   <groupId>io.github.guqiyao</groupId>
   <artifactId>json-resolver</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
 
   <name>json-resolver</name>
   <description>基于spring mvc的json参数解析包</description>

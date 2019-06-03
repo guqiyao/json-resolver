@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.SimpleType;
 import io.github.guqiyao.ParameterParser;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.MethodParameter;
 
 import java.io.IOException;
@@ -24,6 +25,10 @@ public class JacksonParameterParser implements ParameterParser {
 
     @Override
     public Object parse(String body, String key, MethodParameter methodParameter) throws IOException {
+        if (StringUtils.isBlank(body)) {
+            return null;
+        }
+
         JsonNode value = parseValue(body, key);
 
         if (Objects.isNull(value)) {

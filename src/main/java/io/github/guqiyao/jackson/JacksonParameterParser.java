@@ -71,7 +71,7 @@ public class JacksonParameterParser implements ParameterParser {
      * @return                  泛型类型
      */
     private Class<?> getGenericType(Class<?> parameterType, MethodParameter parameter) {
-        if (parameterType.isAssignableFrom(Collection.class)) {
+        if (Collection.class.isAssignableFrom(parameterType)) {
             ParameterizedType parameterizedType = ((ParameterizedType) parameter.getGenericParameterType());
             Type[] types = parameterizedType.getActualTypeArguments();
             return (Class<?>) types[0];

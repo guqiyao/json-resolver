@@ -2,7 +2,7 @@
 是一个基于Spring mvc `HandlerMethodArgumentResolver`的实现, 用于解决在Post请求时, 
 json数据体字段较少, 但为了接收参数却又要封装一个对象的问题;
 
-当前版本: 1.0.1
+当前版本: 1.0.5
 
 ## get it
 ### Maven
